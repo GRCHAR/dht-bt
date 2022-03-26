@@ -14,9 +14,9 @@ import (
 func main() {
 	d := new(dht.DHT)
 	d.Host = "0.0.0.0:12121"
-	d.RequestList = make(chan *dht.FindNodeReq, 100)
-	d.DataList = make(chan map[string]interface{}, 100)
-	d.ReponseList = make(chan *dht.Response, 100)
+	d.RequestList = make(chan *dht.FindNodeReq, 10000)
+	d.DataList = make(chan map[string]interface{}, 10000)
+	d.ReponseList = make(chan *dht.Response, 10000)
 	d.Id = tool.RandString(20)
 	d.Start()
 	store.GetMeta()

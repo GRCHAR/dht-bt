@@ -58,7 +58,7 @@ type HandshakeMesage struct {
 var HashChan chan *HashPair
 
 func init() {
-	HashChan = make(chan *HashPair, 1000)
+	HashChan = make(chan *HashPair, 10000)
 }
 
 func NewMeta(addr string, hash []byte) *Meta {
