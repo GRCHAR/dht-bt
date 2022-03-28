@@ -19,8 +19,9 @@ func main() {
 	d.ReponseList = make(chan *dht.Response, 10000)
 	d.Id = tool.RandString(20)
 	d.Start()
-	store.GetMeta()
-
+	for i := 0; i < 8; i++ {
+		store.GetMeta()
+	}
 	s := make(chan os.Signal, 1)
 	signal.Notify(s, os.Interrupt, os.Kill, syscall.SIGTERM)
 	<-s
