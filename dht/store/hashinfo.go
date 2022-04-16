@@ -10,6 +10,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"time"
 
 	"github.com/ghr-dht/tool"
 	"github.com/marksamman/bencode"
@@ -74,7 +75,7 @@ func GetMeta() {
 	for {
 		select {
 		case hashPair := <-HashChan:
-			go getTorrentMsg(hashPair)
+			getTorrentMsg(hashPair)
 		}
 	}
 }
@@ -177,7 +178,7 @@ func (m *Meta) readOnePiece(payload []byte) error {
 func (m *Meta) handshake() error {
 
 	err := *new(error)
-	m.conn, err = net.Dial("tcp", m.addr)
+	m.conn, err = net.DialTimeout("tcp", m.addr, time.Second*15)
 	if err != nil {
 
 		return err
