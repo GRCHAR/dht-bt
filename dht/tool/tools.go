@@ -57,6 +57,9 @@ func ValidateToken(token string, ip string) bool {
 }
 
 func NeighborId(nodeId string, target string) string {
+	if len(target) < 15 || len(nodeId) < 15 {
+		defer recover()
+	}
 	return target[0:15] + nodeId[15:]
 }
 

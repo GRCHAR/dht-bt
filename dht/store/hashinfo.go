@@ -340,6 +340,7 @@ func (mw *Meta) requestPiece(i int) {
 func parseMetaData(metaData []byte, hashinfo string) {
 	var insertname string
 	insertlength := 0
+	var subFiles []interface{}
 	meta, err := bencode.Decode(bytes.NewBuffer(metaData))
 	if err != nil {
 		return
@@ -356,13 +357,9 @@ func parseMetaData(metaData []byte, hashinfo string) {
 		insertlength = int(length)
 	}
 	if files, ok := meta["files"].([]interface{}); ok {
-		for _, file := range files {
-			if f, ok := file.(map[string]interface{}); ok {
-				log.Println(f)
-			}
-		}
+		subFiles = files
 	}
 	log.Println("hashinfo:", hashinfo)
-	insertBt(hashinfo, insertname, int64(insertlength))
+	Create(hashinfo, insertname, int64(insertlength), subFiles)
 
 }
